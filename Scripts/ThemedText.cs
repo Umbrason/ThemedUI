@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ThemedText : Text
 {
-    public int colorIndex;
+    public byte colorIndex;
     public ThemedUIPalette palette;
 
     public override Material material { get { return palette?.Material_Font ? palette.Material_Font : base.material; } }
@@ -22,7 +22,7 @@ public class ThemedText : Text
             vertex.position = temp.vertices[i];
             vertex.normal = temp.normals[i];
             vertex.uv0 = temp.uv[i];
-            vertex.color = new Color(colorIndex, colorIndex, colorIndex, 1);
+            vertex.color = new Color32(colorIndex, 255, 255, 255);
             toFill.SetUIVertex(vertex, i);
         }
     }
