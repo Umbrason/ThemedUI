@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ThemedImage : Image
 {
-    public byte colorIndex;
+    public int colorIndex;
     public ThemedUIPalette palette;
 
     public override Material material { get { return palette?.Material ? palette.Material : base.material; } }
@@ -22,7 +22,7 @@ public class ThemedImage : Image
             vertex.position = temp.vertices[i];
             vertex.normal = temp.normals[i];
             vertex.uv0 = temp.uv[i];
-            vertex.color = new Color32(colorIndex, colorIndex, colorIndex, colorIndex);
+            vertex.uv1 = new Vector2(colorIndex, 0);
             toFill.SetUIVertex(vertex, i);
         }        
     }

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ThemedText : Text
 {
-    public byte colorIndex;
+    public int colorIndex;
     public ThemedUIPalette palette;
 
     public override Material material { get { return palette?.Material_Font ? palette.Material_Font : base.material; } }
