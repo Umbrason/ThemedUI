@@ -36,7 +36,7 @@ public class ThemedUIPalette : ScriptableObject
     {
         if (material)
             return;
-        material = new Material(Shader.Find("Shader Graphs/ThemedUIGraph"));
+        material = new Material(Shader.Find("ThemedUI/Image"));
         AssetDatabase.AddObjectToAsset(material, this);
         AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(this));
     }

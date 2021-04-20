@@ -12,7 +12,7 @@ public class ThemedText : Text
     public override Material materialForRendering { get { return palette?.Material_Font ? palette.Material_Font : base.materialForRendering; } }
 
     protected override void OnPopulateMesh(VertexHelper toFill)
-    {        
+    {
         base.OnPopulateMesh(toFill);
         Mesh temp = new Mesh();
         toFill.FillMesh(temp);
@@ -22,8 +22,8 @@ public class ThemedText : Text
             vertex.position = temp.vertices[i];
             vertex.normal = temp.normals[i];
             vertex.uv0 = temp.uv[i];
-            vertex.color = new Color32(colorIndex, colorIndex, colorIndex, colorIndex);
+            vertex.uv1 = new Vector2(colorIndex, 0);
             toFill.SetUIVertex(vertex, i);
-        }        
+        }
     }
 }
