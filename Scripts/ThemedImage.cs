@@ -29,7 +29,7 @@ public class ThemedImage : Image
 
     public void DebugMesh()
     {
-        Color[] colors = m_CachedMesh.colors;
+        Color[] colors = workerMesh.colors;
         foreach (Color c in colors)
             Debug.Log(c);
     }
