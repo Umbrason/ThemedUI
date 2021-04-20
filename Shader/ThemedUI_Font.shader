@@ -56,7 +56,7 @@
             {                
                 float2 paletteIndex = float2(((i.uv1.x + .5f) / (float)_ColorCount),.5f);
                 float4 Tint = tex2D(_Palette, paletteIndex);
-                float4 Color = float4(Tint.xyz, tex2D(_MainTex, i.uv).w);                
+                float4 Color = float4(Tint.xyz, tex2D(_MainTex, i.uv0).w);                
                 return Color;
             }
             ENDCG
