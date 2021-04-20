@@ -1,0 +1,13 @@
+{
+  "name": "com.umbrason.themedui",
+  "version": "1.0.0",
+  "displayName": "Themed UI Package",
+  "description": "This Package contains two new UI components: \"Themed Image\" and \"Themed Text\". It allows to change UI palettes inside the editor without worrying about updating every image or text component used.",
+  "keywords": [
+    "Shader"
+  ],
+  "author": {
+    "name": "Umbrason"
+  },
+  "hideInEditor": false
+}
