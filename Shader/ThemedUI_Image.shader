@@ -49,11 +49,11 @@
             }
 
             fixed4 frag (v2f i) : SV_Target
-            {                
+            {
                 float2 paletteIndex = float2(((i.color.x + .5f) / (float)_ColorCount),.5f);
                 float4 Tint = tex2D(_Palette, paletteIndex);
                 float4 Color = tex2D(_MainTex, i.uv0);
-                return Color * float4(i.color.xyz * 255 / float(_ColorCount), 1);
+                return Color * float4(Tint.xyz, 1);
             }
             ENDCG
         }
