@@ -22,7 +22,7 @@ public class ThemedImage : Image
             vertex.position = temp.vertices[i];
             vertex.normal = temp.normals[i];
             vertex.uv0 = temp.uv[i];
-            vertex.color = new Color32(colorIndex, 255, 255, 255);
+            vertex.color = new Color32((byte)(colorIndex << 4), 255, 255, 255);
             toFill.SetUIVertex(vertex, i);
         }
     }
