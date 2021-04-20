@@ -24,21 +24,20 @@
             {
                 float4 vertex : POSITION;
                 float2 uv0 : TEXCOORD0;                
-                float4 color : COLOR;
+                fixed4 color : COLOR;
             };
 
             struct v2f
             {
                 float2 uv0 : TEXCOORD0;                                
                 float4 vertex : SV_POSITION;                
-                float4 color : COLOR;
+                fixed4 color : COLOR;
             };
 
             sampler2D _MainTex;
             sampler2D _Palette;
             float4 _MainTex_ST;
             float1 _ColorCount;
-
 
             v2f vert (appdata v)
             {
@@ -51,10 +50,10 @@
 
             fixed4 frag (v2f i) : SV_Target
             {                
-                float2 paletteIndex = float2(((i.color.x * 255 + .5f) / (float)_ColorCount),.5f);
+                float2 paletteIndex = float2(((i.color.x + .5f) / (float)_ColorCount),.5f);
                 float4 Tint = tex2D(_Palette, paletteIndex);
                 float4 Color = tex2D(_MainTex, i.uv0);
-                return Color * float4(Tint.xyz, 1);
+                return Color * float4(i.color.xyz * 255 / float(_ColorCount), 1);
             }
             ENDCG
         }

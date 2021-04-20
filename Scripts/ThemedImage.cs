@@ -26,4 +26,11 @@ public class ThemedImage : Image
             toFill.SetUIVertex(vertex, i);
         }
     }
+
+    public void DebugMesh()
+    {
+        Color[] colors = m_CachedMesh.colors;
+        foreach (Color c in colors)
+            Debug.Log(c);
+    }
 }

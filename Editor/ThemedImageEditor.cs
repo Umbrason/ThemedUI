@@ -20,6 +20,8 @@ public class ThemedImageEditor : Editor
     {
         if (serializedObject == null)
             return;
+        if (GUILayout.Button("Debug Mesh Colors"))
+            (target as ThemedImage)?.DebugMesh();
         EditorGUILayout.PropertyField(serializedObject.FindProperty("m_Sprite"), new GUIContent("Source Image"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("palette"));
         EditorGUILayout.Separator();
