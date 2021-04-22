@@ -15,6 +15,7 @@
         Pass
         {
             CGPROGRAM
+
             #pragma vertex vert
             #pragma fragment frag            
 
@@ -23,14 +24,14 @@
             struct appdata
             {
                 float4 vertex : POSITION;
-                float2 uv0 : TEXCOORD0;                
+                float2 uv : TEXCOORD0;                                
                 fixed4 color : COLOR;
             };
 
             struct v2f
             {
-                float2 uv0 : TEXCOORD0;                                
-                float4 vertex : SV_POSITION;                
+                float2 uv : TEXCOORD0;                
+                float4 vertex : SV_POSITION;
                 fixed4 color : COLOR;
             };
 
@@ -43,16 +44,17 @@
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv0 = v.uv0;
+                o.uv = v.uv;                
                 o.color = v.color;                
                 return o;
             }
 
             fixed4 frag (v2f i) : SV_Target
             {
-                float2 paletteIndex = float2(((i.color.x / (float)16 * 255 + .5f) / (float)_ColorCount),.5f);
-                float4 Tint = tex2D(_Palette, paletteIndex);
-                float4 Color = tex2D(_MainTex, i.uv0);
+                float index = floor(i.uv.x);
+                float2 paletteUV = float2((index + .5f) / (float)_ColorCount, .5f);
+                float4 Tint = tex2D(_Palette, paletteUV);
+                float4 Color = tex2D(_MainTex, i.uv - float2(index, 0));
                 return Color * float4(Tint.xyz, 1);
             }
             ENDCG

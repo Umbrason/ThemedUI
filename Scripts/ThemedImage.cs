@@ -21,16 +21,11 @@ public class ThemedImage : Image
             UIVertex vertex = new UIVertex();
             vertex.position = temp.vertices[i];
             vertex.normal = temp.normals[i];
-            vertex.uv0 = temp.uv[i];
-            vertex.color = new Color32((byte)(colorIndex << 4), 255, 255, 255);
+            //constrain uv to .00005f, .99995f so floor won't produce unexpected results on edges
+            vertex.uv0 = (temp.uv[i] * .9999f + Vector2.one * .000005f);
+            //encode color index into uv 
+            vertex.uv0 += Vector2.right * colorIndex;
             toFill.SetUIVertex(vertex, i);
         }
-    }
-
-    public void DebugMesh()
-    {
-        Color[] colors = workerMesh.colors;
-        foreach (Color c in colors)
-            Debug.Log(c);
     }
 }
