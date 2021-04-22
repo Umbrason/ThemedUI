@@ -20,6 +20,11 @@ public class ThemedUIPalette : ScriptableObject
     [SerializeField]
     private Material material_Font;
     public Material Material_Font { get { return material_Font; } }
+
+    [SerializeField]
+    private Material material_TMPFont;
+    public Material Material_TMPFont { get { return material_TMPFont; } }
+
     [SerializeField]
     private Texture2D texture;
 
@@ -30,6 +35,14 @@ public class ThemedUIPalette : ScriptableObject
             return;
         material_Font = new Material(Shader.Find("ThemedUI/Font"));
         AssetDatabase.AddObjectToAsset(material_Font, this);
+        AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(this));
+    }
+    public void InitializeMaterial_TMPFont()
+    {
+        if (material_TMPFont)
+            return;
+        material_TMPFont = new Material(Shader.Find("ThemedUI/TMP"));
+        AssetDatabase.AddObjectToAsset(material_TMPFont, this);
         AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(this));
     }
     public void InitializeMaterial()
@@ -57,6 +70,15 @@ public class ThemedUIPalette : ScriptableObject
         material.name = $"{this.name}_material";
         material.SetTexture("_Palette", texture);
         material.SetFloat("_ColorCount", colors.Count);
+    }
+
+    public void UpdateMaterial_TMPFont()
+    {
+        if (!material_TMPFont)
+            return;
+        material_TMPFont.name = $"{this.name}_material";
+        material_TMPFont.SetTexture("_Palette", texture);
+        material_TMPFont.SetFloat("_ColorCount", colors.Count);
     }
 
     public void UpdateMaterial_Font()

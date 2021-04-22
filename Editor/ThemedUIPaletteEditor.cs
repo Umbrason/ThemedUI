@@ -28,6 +28,7 @@ public class ThemedUIPaletteEditor : Editor
             palette.InitializeTexture();
             palette.InitializeMaterial();
             palette.InitializeMaterial_Font();
+            palette.InitializeMaterial_TMPFont();
         }
     }
 
@@ -39,6 +40,7 @@ public class ThemedUIPaletteEditor : Editor
             palette.UpdateTexture();
             palette.UpdateMaterial();
             palette.UpdateMaterial_Font();
+            palette.UpdateMaterial_TMPFont();
         }
     }
 
