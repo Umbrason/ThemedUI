@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(ThemedImage))]
+[CustomEditor(typeof(ThemedImage)),CanEditMultipleObjects]
 public class ThemedImageEditor : Editor
 {
     private const float cellSize = 25f;

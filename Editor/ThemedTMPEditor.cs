@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using TMPro;
 
-[CustomEditor(typeof(ThemedTextMeshPro))]
+[CustomEditor(typeof(ThemedTextMeshPro)),CanEditMultipleObjects]
 public class ThemedTMPEditor : TMPro.EditorUtilities.TMP_EditorPanelUI
 {
     private const float cellSize = 25f;
