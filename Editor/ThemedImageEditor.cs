@@ -22,7 +22,7 @@ public class ThemedImageEditor : Editor
             return;
         EditorGUILayout.PropertyField(serializedObject.FindProperty("m_Sprite"), new GUIContent("Source Image"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("palette"));
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("color"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("m_Color"));
         EditorGUILayout.Separator();
         EditorGUILayout.PropertyField(serializedObject.FindProperty("m_RaycastTarget"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("m_RaycastPadding"));

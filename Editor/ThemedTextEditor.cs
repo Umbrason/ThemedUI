@@ -20,7 +20,7 @@ public class ThemedTextEditor : Editor
             return;
         EditorGUILayout.PropertyField(serializedObject.FindProperty("m_Text"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("palette"));
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("color"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("m_Color"));
         EditorGUILayout.Separator();
         EditorGUILayout.PropertyField(serializedObject.FindProperty("m_FontData"));
         EditorGUILayout.Separator();
