@@ -55,7 +55,7 @@
                 float2 paletteUV = float2((index + .5f) / (float)_ColorCount, .5f);
                 float4 Tint = tex2D(_Palette, paletteUV);
                 float4 Color = Tint * float4(1,1,1, tex2D(_MainTex, i.uv - float2(index,0)).w);
-                return Color;
+                return Color * i.color;
             }
             ENDCG
         }
