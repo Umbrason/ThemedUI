@@ -17,10 +17,13 @@ public class ThemedTextEditor : Editor
     public override void OnInspectorGUI()
     {
         if (serializedObject == null)
-            return;        
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("palette"));        
-        DrawDefaultInspector();   
-        EditorGUILayout.Separator();     
+            return;
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("m_Text"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("palette"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("color"));
+        EditorGUILayout.Separator();
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("m_FontData"));
+        EditorGUILayout.Separator();
         DrawColorButtons();
         if (serializedObject.hasModifiedProperties)
             serializedObject.ApplyModifiedProperties();
