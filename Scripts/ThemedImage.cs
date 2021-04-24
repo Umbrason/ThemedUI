@@ -21,6 +21,7 @@ public class ThemedImage : Image
             UIVertex vertex = new UIVertex();
             vertex.position = temp.vertices[i];
             vertex.normal = temp.normals[i];
+            vertex.color = temp.colors[i];
             //constrain uv to .00005f, .99995f so floor won't produce unexpected results on edges
             vertex.uv0 = ((Vector2)temp.uv[i] * .9999f + Vector2.one * .000005f) + Vector2.right * colorIndex;                        
             toFill.SetUIVertex(vertex, i);
