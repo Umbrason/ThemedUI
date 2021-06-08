@@ -60,12 +60,9 @@ public class ThemedUIPaletteEditor : Editor
         }
     }
 
-
-
     private void DrawHeader(Rect rect) => EditorGUI.LabelField(rect, "Colors");
     void DrawListItems(Rect rect, int index, bool isActive, bool isFocused)
     {
-
         SerializedProperty element = list.serializedProperty.GetArrayElementAtIndex(index);
         EditorGUI.PropertyField(rect, element);
     }
