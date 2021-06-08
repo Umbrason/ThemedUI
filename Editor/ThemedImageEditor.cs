@@ -1,17 +1,16 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(ThemedImage)),CanEditMultipleObjects]
+[CustomEditor(typeof(ThemedImage)), CanEditMultipleObjects]
 public class ThemedImageEditor : Editor
 {
     private const float cellSize = 25f;
-    private ThemedUIPalette palette;
+    private ThemedUIPalette palette { get { return (target as ThemedImage)?.palette; } }
     SerializedProperty colorIndexProperty;
     SerializedProperty typeProperty;
 
     void OnEnable()
-    {
-        palette = (target as ThemedImage)?.palette;
+    {        
         colorIndexProperty = serializedObject.FindProperty("colorIndex");
         typeProperty = serializedObject.FindProperty("m_Type");
     }

@@ -5,12 +5,11 @@ using UnityEditor;
 public class ThemedTextEditor : Editor
 {
     private const float cellSize = 25f;
-    private ThemedUIPalette palette;
+    private ThemedUIPalette palette { get { return (target as ThemedImage)?.palette; } }
     SerializedProperty colorIndexProperty;
 
     void OnEnable()
     {
-        palette = (target as ThemedText)?.palette;
         colorIndexProperty = serializedObject.FindProperty("colorIndex");
     }
 
