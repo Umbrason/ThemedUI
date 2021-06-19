@@ -28,7 +28,7 @@
 	    }
         LOD 100
         Lighting Off Cull Off ZTest Always ZWrite Off
-        Blend One OneMinusSrcAlpha
+        Blend SrcAlpha OneMinusSrcAlpha
         ColorMask [_ColorMask]
         Pass
         {
