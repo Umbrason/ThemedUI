@@ -5,7 +5,7 @@ using UnityEditor;
 public class ThemedTextEditor : Editor
 {
     private const float cellSize = 25f;
-    private ThemedUIPalette palette { get { return (target as ThemedImage)?.palette; } }
+    private ThemedUIPalette palette { get { return (target as ThemedText)?.palette; } }
     SerializedProperty colorIndexProperty;
 
     void OnEnable()
