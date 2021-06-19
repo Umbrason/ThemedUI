@@ -9,7 +9,7 @@ public class ThemedImage : Image
     public ThemedUIPalette palette;
 
     public override Material material { get { return palette?.Material ? palette.Material : base.material; } }
-    public override Material materialForRendering { get { return palette?.Material ? palette.Material : base.materialForRendering; } }
+    public override Material materialForRendering { get { return palette?.Material ? this.GetModifiedMaterial(palette.Material) : this.GetModifiedMaterial(base.materialForRendering); } }
 
     protected override void OnPopulateMesh(VertexHelper toFill)
     {

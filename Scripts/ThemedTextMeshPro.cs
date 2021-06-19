@@ -11,7 +11,7 @@ public class ThemedTextMeshPro : TextMeshProUGUI
     public ThemedUIPalette palette;
 
     public override Material material { get { return palette?.Material_TMPFont ? palette.Material_TMPFont : base.material; } }
-    public override Material materialForRendering { get { return palette?.Material_TMPFont ? palette.Material_TMPFont : base.materialForRendering; } }
+    public override Material materialForRendering { get { return palette?.Material ? this.GetModifiedMaterial(palette.Material_TMPFont) : this.GetModifiedMaterial(base.materialForRendering); } }
 
     protected override void GenerateTextMesh()
     {

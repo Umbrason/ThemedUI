@@ -9,7 +9,7 @@ public class ThemedText : Text
     public ThemedUIPalette palette;
 
     public override Material material { get { return palette?.Material_Font ? palette.Material_Font : base.material; } }
-    public override Material materialForRendering { get { return palette?.Material_Font ? palette.Material_Font : base.materialForRendering; } }
+        public override Material materialForRendering { get { return palette?.Material ? this.GetModifiedMaterial(palette.Material_Font) : this.GetModifiedMaterial(base.materialForRendering); } }
 
     protected override void OnPopulateMesh(VertexHelper toFill)
     {
