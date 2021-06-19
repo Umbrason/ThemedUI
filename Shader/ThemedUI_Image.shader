@@ -11,6 +11,9 @@
 	    _StencilOp			("Stencil Operation", Float) = 0
 	    _StencilWriteMask	("Stencil Write Mask", Float) = 0
 	    _StencilReadMask	("Stencil Read Mask", Float) = 1
+
+        _CullMode			("Cull Mode", Float) = 0
+	    _ColorMask			("Color Mask", Float) = 15
     }
     SubShader
     {
@@ -25,7 +28,8 @@
 	    }
         LOD 100
         Lighting Off Cull Off ZTest Always ZWrite Off
-        Blend SrcAlpha OneMinusSrcAlpha
+        Blend One OneMinusSrcAlpha
+        ColorMask [_ColorMask]
         Pass
         {
             CGPROGRAM
