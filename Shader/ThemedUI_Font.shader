@@ -6,11 +6,11 @@
         [NoScaleOffset]_Palette("Palette", 2D) = "white" {}
         _ColorCount("ColorCount", Float) = 6
 
-        _StencilComp		("Stencil Comparison", Float) = 8
-	    _Stencil			("Stencil ID", Float) = 0
+        _StencilComp		("Stencil Comparison", Float) = 3
+	    _Stencil			("Stencil ID", Float) = 1
 	    _StencilOp			("Stencil Operation", Float) = 0
-	    _StencilWriteMask	("Stencil Write Mask", Float) = 255
-	    _StencilReadMask	("Stencil Read Mask", Float) = 255
+	    _StencilWriteMask	("Stencil Write Mask", Float) = 0
+	    _StencilReadMask	("Stencil Read Mask", Float) = 1
     }
     SubShader
     {
