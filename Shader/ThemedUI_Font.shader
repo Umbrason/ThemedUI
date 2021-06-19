@@ -5,16 +5,31 @@
         [NoScaleOffset]_MainTex("Texture", 2D) = "white" {}
         [NoScaleOffset]_Palette("Palette", 2D) = "white" {}
         _ColorCount("ColorCount", Float) = 6
+
+        _StencilComp		("Stencil Comparison", Float) = 8
+	    _Stencil			("Stencil ID", Float) = 0
+	    _StencilOp			("Stencil Operation", Float) = 0
+	    _StencilWriteMask	("Stencil Write Mask", Float) = 255
+	    _StencilReadMask	("Stencil Read Mask", Float) = 255
     }
     SubShader
     {
         Tags { "RenderType"="Transparent" "Queue"="Transparent" }
+        Stencil
+        {
+		    Ref [_Stencil]
+		    Comp [_StencilComp]
+		    Pass [_StencilOp]
+		    ReadMask [_StencilReadMask]
+    		WriteMask [_StencilWriteMask]
+	    }
         LOD 100
         Lighting Off Cull Off ZTest Always ZWrite Off
         Blend SrcAlpha OneMinusSrcAlpha
         Pass
         {
             CGPROGRAM
+
             #pragma vertex vert
             #pragma fragment frag            
 
@@ -38,7 +53,6 @@
             sampler2D _Palette;
             float4 _MainTex_ST;
             float1 _ColorCount;
-
 
             v2f vert (appdata v)
             {
