@@ -9,6 +9,20 @@ using TMPro;
 
 public static class ThemedUIEditorUtility
 {
+    public static ThemedUIPalette ActivePalette { get { return activePalette ??= (ThemedUIPalette)AssetDatabase.LoadMainAssetAtPath(AssetDatabase.GUIDToAssetPath(EditorPrefs.GetString("ThemedUI.ActivePalette"))); } set { activePalette = value; EditorPrefs.SetString("ThemedUI.ActivePalette", AssetDatabase.GUIDFromAssetPath(AssetDatabase.GetAssetPath(value)).ToString()); } }
+    private static ThemedUIPalette activePalette;
+
+    [MenuItem("Assets/Set Default UIPalette")]
+    public static void SetActivePalette()
+    {
+        ActivePalette = Selection.activeObject as ThemedUIPalette ?? ActivePalette;
+    }
+    [MenuItem("Assets/Set Default UIPalette", true)]
+    private static bool EvaluateSetActivePalette()
+    {
+        return Selection.activeObject is ThemedUIPalette;
+    }
+
     [MenuItem("GameObject/UI/ThemedImage")]
     public static void CreateThemedImage()
     {
@@ -26,6 +40,9 @@ public static class ThemedUIEditorUtility
     {
         var go = new GameObject("Themed Image", typeof(ThemedImage));
         go.transform.SetParent(parent);
+        var component = go.GetComponent<ThemedImage>();
+        if (component)
+            component.palette = ActivePalette;
         if (parent)
             go.layer = parent.gameObject.layer;
         Undo.RegisterCreatedObjectUndo(go, "Create Themed Image");
@@ -48,6 +65,9 @@ public static class ThemedUIEditorUtility
     {
         var go = new GameObject("Themed Text", typeof(ThemedText));
         go.transform.SetParent(parent);
+        var component = go.GetComponent<ThemedText>();
+        if (component)
+            component.palette = ActivePalette;
         if (parent)
             go.layer = parent.gameObject.layer;
         Undo.RegisterCreatedObjectUndo(go, "Create Themed Text");
@@ -70,6 +90,9 @@ public static class ThemedUIEditorUtility
     {
         var go = new GameObject("Themed TMPro", typeof(ThemedTextMeshPro));
         go.transform.SetParent(parent);
+        var component = go.GetComponent<ThemedTextMeshPro>();
+        if (component)
+            component.palette = ActivePalette;
         if (parent)
             go.layer = parent.gameObject.layer;
         Undo.RegisterCreatedObjectUndo(go, "Create Themed TMPro");
@@ -82,8 +105,10 @@ public static class ThemedUIEditorUtility
         Undo.SetCurrentGroupName("convert to themed image");
         foreach (GameObject go in Selection.gameObjects)
         {
-            Image textComponent = go.GetComponent<Image>();
-            ReplaceComponent<Image, ThemedImage>(textComponent);
+            Image imageComponent = go.GetComponent<Image>();
+            var component = ReplaceComponent<Image, ThemedImage>(imageComponent);
+            if (component && component.palette == null)
+                component.palette = ActivePalette;
         }
         Undo.IncrementCurrentGroup();
     }
@@ -95,7 +120,9 @@ public static class ThemedUIEditorUtility
         foreach (GameObject go in Selection.gameObjects)
         {
             Text textComponent = go.GetComponent<Text>();
-            ReplaceComponent<Text, ThemedText>(textComponent);
+            var component = ReplaceComponent<Text, ThemedText>(textComponent);
+            if (component && component.palette == null)
+                component.palette = ActivePalette;
         }
         Undo.IncrementCurrentGroup();
     }
@@ -106,16 +133,18 @@ public static class ThemedUIEditorUtility
         Undo.SetCurrentGroupName("convert to themed tmpro");
         foreach (GameObject go in Selection.gameObjects)
         {
-            TextMeshProUGUI textComponent = go.GetComponent<TextMeshProUGUI>();
-            ReplaceComponent<TextMeshProUGUI, ThemedTextMeshPro>(textComponent);
+            TextMeshProUGUI textMeshProComponent = go.GetComponent<TextMeshProUGUI>();
+            var component = ReplaceComponent<TextMeshProUGUI, ThemedTextMeshPro>(textMeshProComponent);
+            if (component && component.palette == null)
+                component.palette = ActivePalette;
         }
         Undo.IncrementCurrentGroup();
     }
 
-    private static void ReplaceComponent<T, K>(T original) where T : Component where K : Component
+    private static K ReplaceComponent<T, K>(T original) where T : Component where K : Component
     {
         if (original == null)
-            return;
+            return null;
         BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Default | BindingFlags.DeclaredOnly | BindingFlags.FlattenHierarchy;
         GameObject gameObject = original.gameObject;
         Dictionary<string, object> propertyValues = new Dictionary<string, object>();
@@ -128,6 +157,7 @@ public static class ThemedUIEditorUtility
         foreach (PropertyInfo info in typeof(T).GetProperties(flags))
             if (info.CanWrite && typeof(K).GetProperty(info.Name) != null)
                 info.SetValue(newComponent, propertyValues[info.Name]);
+        return newComponent;
     }
     public static bool DrawColorButtons(ThemedUIPalette palette, ref SerializedProperty colorIndexProperty, float cellSize)
     {
