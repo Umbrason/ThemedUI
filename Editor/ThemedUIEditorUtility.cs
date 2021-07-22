@@ -13,44 +13,66 @@ public static class ThemedUIEditorUtility
     public static void CreateThemedImage()
     {
         Undo.SetCurrentGroupName("create themed image");
-        foreach (GameObject go in Selection.gameObjects)
-        {
-
-            GameObject child = new GameObject("Themed Image", typeof(ThemedImage));
-            child.transform.SetParent(go.transform);
-            child.layer = go.layer;
-            Undo.RegisterCreatedObjectUndo(child,"Create Themed Image");
-        }
+        if (Selection.transforms.Length > 0)
+            foreach (var transform in Selection.transforms)
+            {
+                InstantiateThemedImage(transform);
+            }
+        else
+            InstantiateThemedImage();
         Undo.IncrementCurrentGroup();
+    }
+    private static void InstantiateThemedImage(Transform parent = null)
+    {
+        var go = new GameObject("Themed Image", typeof(ThemedImage));
+        go.transform.SetParent(parent);
+        if (parent)
+            go.layer = parent.gameObject.layer;
+        Undo.RegisterCreatedObjectUndo(go, "Create Themed Image");
     }
 
     [MenuItem("GameObject/UI/ThemedText")]
     public static void CreateThemedText()
     {
         Undo.SetCurrentGroupName("create themed text");
-        foreach (GameObject go in Selection.gameObjects)
-        {
-
-            GameObject child = new GameObject("Themed Text", typeof(ThemedText));
-            child.transform.SetParent(go.transform);
-            child.layer = go.layer;
-            Undo.RegisterCreatedObjectUndo(child,"Create Themed Text");
-        }
+        if (Selection.transforms.Length > 0)
+            foreach (var transform in Selection.transforms)
+            {
+                InstantiateThemedText(transform);
+            }
+        else
+            InstantiateThemedText();
         Undo.IncrementCurrentGroup();
+    }
+    private static void InstantiateThemedText(Transform parent = null)
+    {
+        var go = new GameObject("Themed Text", typeof(ThemedText));
+        go.transform.SetParent(parent);
+        if (parent)
+            go.layer = parent.gameObject.layer;
+        Undo.RegisterCreatedObjectUndo(go, "Create Themed Text");
     }
 
     [MenuItem("GameObject/UI/ThemedTMPro")]
     public static void CreateThemedTextMeshPro()
     {
         Undo.SetCurrentGroupName("create themed TMPro");
-        foreach (GameObject go in Selection.gameObjects)
-        {
-            GameObject child = new GameObject("Themed TMPro", typeof(ThemedTextMeshPro));
-            child.transform.SetParent(go.transform);
-            child.layer = go.layer;
-            Undo.RegisterCreatedObjectUndo(child,"Create Themed TMPro");
-        }
+        if (Selection.transforms.Length > 0)
+            foreach (var transform in Selection.transforms)
+            {
+                InstantiateThemedTextMeshPro(transform);
+            }
+        else
+            InstantiateThemedTextMeshPro();
         Undo.IncrementCurrentGroup();
+    }
+    private static void InstantiateThemedTextMeshPro(Transform parent = null)
+    {
+        var go = new GameObject("Themed TMPro", typeof(ThemedTextMeshPro));
+        go.transform.SetParent(parent);
+        if (parent)
+            go.layer = parent.gameObject.layer;
+        Undo.RegisterCreatedObjectUndo(go, "Create Themed TMPro");
     }
 
 
@@ -107,7 +129,6 @@ public static class ThemedUIEditorUtility
             if (info.CanWrite && typeof(K).GetProperty(info.Name) != null)
                 info.SetValue(newComponent, propertyValues[info.Name]);
     }
-
     public static bool DrawColorButtons(ThemedUIPalette palette, ref SerializedProperty colorIndexProperty, float cellSize)
     {
         if (!palette)
@@ -141,13 +162,15 @@ public static class ThemedUIEditorUtility
                 if (GUILayout.Button($"{ColorToHex(colors[i])}", GUILayout.Width(cellSize * 3), GUILayout.Height(cellSize)))
                 {
                     colorIndexProperty.intValue = i;
+                    GUI.skin.button.normal.background = previousButtonSkin;
                     return true;
                 }
             }
             GUILayout.FlexibleSpace();
             EditorGUILayout.EndHorizontal();
         }
-        GUI.skin.button.normal.background = previousButtonSkin;        
+        GUI.skin.button.normal.background = previousButtonSkin;
+        Debug.Log(previousButtonSkin);
         GUI.backgroundColor = Color.white;
         GUI.contentColor = oldContentColor;
         return false;
