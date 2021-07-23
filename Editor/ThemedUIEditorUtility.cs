@@ -199,8 +199,7 @@ public static class ThemedUIEditorUtility
             GUILayout.FlexibleSpace();
             EditorGUILayout.EndHorizontal();
         }
-        GUI.skin.button.normal.background = previousButtonSkin;
-        Debug.Log(previousButtonSkin);
+        GUI.skin.button.normal.background = previousButtonSkin;        
         GUI.backgroundColor = Color.white;
         GUI.contentColor = oldContentColor;
         return false;
