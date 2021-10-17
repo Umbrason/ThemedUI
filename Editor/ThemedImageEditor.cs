@@ -5,7 +5,8 @@ using UnityEditor;
 public class ThemedImageEditor : Editor
 {
     private const float cellSize = 25f;
-    private ThemedUIPalette palette { get { return (target as ThemedImage)?.palette; } }
+    SerializedProperty paletteProperty;
+    private ThemedUIPalette palette { get { return paletteProperty.objectReferenceValue as ThemedUIPalette; } }
     SerializedProperty colorIndexProperty;
     SerializedProperty typeProperty;
 
@@ -13,12 +14,15 @@ public class ThemedImageEditor : Editor
     {
         colorIndexProperty = serializedObject.FindProperty("colorIndex");
         typeProperty = serializedObject.FindProperty("m_Type");
+        paletteProperty = serializedObject.FindProperty("palette");
     }
 
     public override void OnInspectorGUI()
     {
         if (serializedObject == null)
             return;
+        if (!palette)
+            paletteProperty.objectReferenceValue = ThemedUIEditorUtility.ActivePalette;
         EditorGUILayout.PropertyField(serializedObject.FindProperty("m_Sprite"), new GUIContent("Source Image"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("palette"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("m_Color"));
@@ -57,7 +61,7 @@ public class ThemedImageEditor : Editor
         EditorGUI.indentLevel = 0;
         //Material m = (Material)serializedObject.FindProperty("m_Material").objectReferenceValue;        
         EditorGUILayout.Separator();
-        ThemedUIEditorUtility.DrawColorButtons(palette, ref colorIndexProperty, cellSize);        
+        ThemedUIEditorUtility.DrawColorButtons(palette, ref colorIndexProperty, cellSize);
         if (serializedObject.hasModifiedProperties)
             serializedObject.ApplyModifiedProperties();
     }

@@ -4,24 +4,28 @@ using UnityEditor;
 using UnityEngine;
 using TMPro;
 
-[CustomEditor(typeof(ThemedTextMeshPro)),CanEditMultipleObjects]
+[CustomEditor(typeof(ThemedTextMeshPro)), CanEditMultipleObjects]
 public class ThemedTMPEditor : TMPro.EditorUtilities.TMP_EditorPanelUI
 {
     private const float cellSize = 25f;
-    private ThemedUIPalette palette { get { return (target as ThemedTextMeshPro)?.palette; } }
+    SerializedProperty paletteProperty;
+    private ThemedUIPalette palette { get { return paletteProperty.objectReferenceValue as ThemedUIPalette; } }
     SerializedProperty colorIndexProperty;
 
     new void OnEnable()
     {
         base.OnEnable();
         colorIndexProperty = serializedObject.FindProperty("colorIndex");
+        paletteProperty = serializedObject.FindProperty("palette");
     }
-    
+
 
     public override void OnInspectorGUI()
     {
         if (serializedObject == null)
             return;
+        if (!palette)
+            paletteProperty.objectReferenceValue = ThemedUIEditorUtility.ActivePalette;
         if (GUILayout.Button("DebugMesh"))
         {
             Vector2[] uvs = (target as ThemedTextMeshPro).mesh.uv;
@@ -31,7 +35,7 @@ public class ThemedTMPEditor : TMPro.EditorUtilities.TMP_EditorPanelUI
         EditorGUILayout.PropertyField(serializedObject.FindProperty("palette"));
         ThemedUIEditorUtility.DrawColorButtons(palette, ref colorIndexProperty, cellSize);
         if (serializedObject.hasModifiedProperties)
-            serializedObject.ApplyModifiedProperties();        
+            serializedObject.ApplyModifiedProperties();
         EditorGUILayout.Separator();
         base.OnInspectorGUI();
 
