@@ -16,6 +16,7 @@ public class ThemedTextMeshPro : TextMeshProUGUI
     {
         if (palette != null)
         {
+            baseMat = new(baseMat);
             baseMat.shader = palette.Material_TMPFont.shader;
             baseMat.SetTexture("_Palette", palette.Texture);
             baseMat.SetInt("_ColorCount", palette.ColorCount);
