@@ -25,13 +25,7 @@ public class ThemedTMPEditor : TMPro.EditorUtilities.TMP_EditorPanelUI
         if (serializedObject == null)
             return;
         if (!palette)
-            paletteProperty.objectReferenceValue = ThemedUIEditorUtility.ActivePalette;
-        if (GUILayout.Button("DebugMesh"))
-        {
-            Vector2[] uvs = (target as ThemedTextMeshPro).mesh.uv;
-            foreach (Vector2 uv in uvs)
-                Debug.Log(uv);
-        }
+            paletteProperty.objectReferenceValue = ThemedUIEditorUtility.ActivePalette;        
         EditorGUILayout.PropertyField(serializedObject.FindProperty("palette"));
         ThemedUIEditorUtility.DrawColorButtons(palette, ref colorIndexProperty, cellSize);
         if (serializedObject.hasModifiedProperties)
