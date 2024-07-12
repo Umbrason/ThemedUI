@@ -27,6 +27,7 @@ public class ThemedUIPalette : ScriptableObject
 
     [SerializeField]
     private Texture2D texture;
+    public Texture2D Texture => texture;
 
 #if UNITY_EDITOR
     public void InitializeMaterial_Font()
