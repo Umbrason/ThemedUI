@@ -100,7 +100,7 @@ SubShader {
 			fixed4	color			: COLOR;
 			float2	texcoord0		: TEXCOORD0;
 			float2	texcoord1		: TEXCOORD1;
-			float2	paletteIndex	: TEXCOORD5;
+			float2	texcoord2		: TEXCOORD2;
 		};
 
 		struct pixel_t {
@@ -114,7 +114,7 @@ SubShader {
 			half4	mask			: TEXCOORD2;			// Position in clip space(xy), Softness(zw)
 			#if (UNDERLAY_ON | UNDERLAY_INNER)
 			float4	texcoord1		: TEXCOORD3;			// Texture UV, alpha, reserved
-			half2	underlayParam	: TEXCOORD4;			// Scale(x), Bias(y)			
+			half2	underlayParam	: TEXCOORD4;			// Scale(x), Bias(y)						
 			#endif
 			float2	paletteIndex	: TEXCOORD5;
 		};
@@ -129,7 +129,7 @@ SubShader {
 			UNITY_TRANSFER_INSTANCE_ID(input, output);
 			UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
 
-			output.paletteIndex = float2(uint2(input.texcoord0.xy)/1);
+			output.paletteIndex = float2(uint2(input.texcoord2.xy)/1);
 			float bold = step(input.texcoord1.y, 0);
 
 			float4 vert = input.vertex;
@@ -235,7 +235,6 @@ SubShader {
 			#endif			
             float2 paletteUV = float2((input.paletteIndex.x + .5f) / (float)_ColorCount, .5f);
             float4 Tint = tex2D(_Palette, paletteUV);
-
 			return c * Tint;
 		}
 		ENDCG

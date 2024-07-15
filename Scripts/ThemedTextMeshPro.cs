@@ -27,11 +27,13 @@ public class ThemedTextMeshPro : TextMeshProUGUI
     protected override void GenerateTextMesh()
     {
         base.GenerateTextMesh();
-        Vector2[] uvs = m_mesh.uv;
+        Vector2[] uvs = new Vector2[m_mesh.uv.Length];
         for (int i = 0; i < uvs.Length; i++)
-            uvs[i] += Vector2.right * colorIndex;
-        m_mesh.uv = uvs;
+            uvs[i] = Vector2.right * (colorIndex);
+        m_mesh.uv3 = uvs;
         canvasRenderer.SetMesh(m_mesh);
+        var canvas = GetComponentInParent<Canvas>();
+        canvas.additionalShaderChannels |= AdditionalCanvasShaderChannels.TexCoord2;
     }
 
     public static explicit operator TextMeshPro(ThemedTextMeshPro textMeshPro) => (TextMeshPro)textMeshPro;
