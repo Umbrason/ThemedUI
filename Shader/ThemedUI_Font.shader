@@ -56,7 +56,7 @@
             sampler2D _MainTex;
             sampler2D _Palette;
             float4 _MainTex_ST;
-            float1 _ColorCount;
+            float _ColorCount;
 
             v2f vert (appdata v)
             {
